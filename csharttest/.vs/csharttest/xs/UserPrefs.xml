@@ -1,16 +1,15 @@
 ﻿<Properties StartupConfiguration="{381AF264-DD5C-4B69-9ABA-F8FDE4F9C045}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="csharttest/UnitTest1.cs">
     <Files>
-      <File FileName="csharttest/UnitTest1.cs" Line="30" Column="32" />
+      <File FileName="../../../../../.bitnami/stackman/machines/xampp/volumes/root/htdocs/litecart/vqmod/vqmod.php" Line="1" Column="1" />
+      <File FileName="csharttest/UnitTest1.cs" Line="11" Column="29" />
+      <File FileName="csharttest/LoginTest.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="csharttest" expanded="True">
             <Node name="csharttest" expanded="True">
-              <Node name="Dependencies" expanded="True">
-                <Node name="PackageDependencies" expanded="True" />
-              </Node>
               <Node name="UnitTest1.cs" selected="True" />
             </Node>
           </Node>
