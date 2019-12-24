@@ -29,7 +29,6 @@ namespace csharttest
             driver.FindElement(By.Name("username")).SendKeys("admin");
             IWebElement elementpswd = wait.Until(d => d.FindElement(By.Name("password")));
             driver.FindElement(By.Name("password")).SendKeys("admin");
-           // Thread.Sleep(3000);
             driver.FindElement(By.Name("remember_me")).Click();
             driver.FindElement(By.Name("login")).Click();
             wait.Until(ExpectedConditions.TitleIs("My Store"));
