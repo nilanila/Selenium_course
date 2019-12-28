@@ -18,5 +18,11 @@
     <None Update="chromedriver">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="geckodriver">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="FirefoxStart.cs" />
   </ItemGroup>
 </Project>
