@@ -17,7 +17,7 @@ namespace csharttest
         public void start()
         {
             driver = new ChromeDriver();
-            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
         }
 
         [Test]
@@ -44,9 +44,10 @@ namespace csharttest
                 liElements = driver.FindElements(By.CssSelector(selector));
                 var innerLiElements = liElements[i].FindElements(By.CssSelector("ul.docs li"));
 
-                for (var j = 1; j < innerLiElements.Count; j++)
+                for (var j = 0; j < innerLiElements.Count; j++)
                 {
-                    innerLiElements[j].Click();
+                    if(j > 0)
+                        innerLiElements[j].Click();
                     liElements = driver.FindElements(By.CssSelector(selector));
                     innerLiElements = liElements[i].FindElements(By.CssSelector("ul.docs li"));
                     wait.Until(ExpectedConditions.ElementExists(By.CssSelector(headerSelector)));
