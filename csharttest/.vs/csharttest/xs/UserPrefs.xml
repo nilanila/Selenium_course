@@ -1,15 +1,15 @@
 ﻿<Properties StartupConfiguration="{381AF264-DD5C-4B69-9ABA-F8FDE4F9C045}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="csharttest/LoginTest.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="csharttest/ProductTests.cs">
     <Files>
-      <File FileName="csharttest/LoginTest.cs" Line="52" Column="39" />
-      <File FileName="csharttest/MyFirstTest.cs" />
+      <File FileName="csharttest/LoginTest.cs" Line="11" Column="28" />
+      <File FileName="csharttest/ProductTests.cs" Line="83" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="csharttest" expanded="True">
             <Node name="csharttest" expanded="True">
-              <Node name="LoginTest.cs" selected="True" />
+              <Node name="ProductTests.cs" selected="True" />
             </Node>
           </Node>
         </State>
@@ -19,9 +19,11 @@
           <Node name="csharttest" expanded="True">
             <Node name="csharttest" expanded="True">
               <Node name="csharttest" expanded="True">
-                <Node name="LoginTest" expanded="True">
+                <Node name="AdminTests" expanded="True">
                   <Node name="CheckMenu" selected="True" />
                 </Node>
+                <Node name="MyFirstTest" expanded="True" />
+                <Node name="SecondTest" expanded="True" />
               </Node>
             </Node>
           </Node>
