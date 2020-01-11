@@ -30,7 +30,7 @@ namespace csharttest
 
         [Test]
         [Obsolete]
-        public void CheckMenu()
+        public void Task7_CheckMenu()
         {
             LoginInternal();
 
