@@ -23,22 +23,16 @@ namespace csharttest
         [SetUp]
         public void start2()
         {
-
             FirefoxOptions options = new FirefoxOptions();
             options.BrowserExecutableLocation = @"/Applications/Firefox Nightly.app";
             Driver = new FirefoxDriver(options);
             Wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
         }
-
+        
         [Test]
         public void StartFF()
         {
-            Driver.Url = "http://www.google.com/";
-            IWebElement element = Wait.Until(d => d.FindElement(By.Name("q")));
-            Driver.FindElement(By.Name("q")).SendKeys("webdriver");
-            Thread.Sleep(300);
-            Driver.FindElement(By.Name("btnK")).Click();
-            Wait.Until(ExpectedConditions.TitleIs("webdriver - Google-Suche"));
+            BaseTest.DoTest(Driver, Wait, "webdriver - Google-Suche");
         }
 
 

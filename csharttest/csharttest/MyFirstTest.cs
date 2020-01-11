@@ -4,7 +4,6 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium.Firefox;
 
 namespace csharttest
 {
@@ -27,7 +26,7 @@ namespace csharttest
             Driver.Url = "http://www.google.com/";
             IWebElement element = Wait.Until(d => d.FindElement(By.Name("q")));
             Driver.FindElement(By.Name("q")).SendKeys("webdriver");
-            Thread.Sleep(300);
+            Thread.Sleep(1000);
             Driver.FindElement(By.Name("btnK")).Click();
             Wait.Until(ExpectedConditions.TitleIs("webdriver - Google Search"));
         }
