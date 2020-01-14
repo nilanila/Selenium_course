@@ -9,7 +9,7 @@ using OpenQA.Selenium.Support.UI;
 namespace csharttest
 {
     [TestFixture]
-    public class ProductTests
+    public class SortingTests
     {
         private IWebDriver driver;
         private WebDriverWait wait;
@@ -23,18 +23,19 @@ namespace csharttest
 
         [Test]
         [Obsolete]
-        public void Task8_CheckStickers()
+        public void Task9_CheckSorting()
         {
-            driver.Url = "http://localhost:8080/litecart/";
-            var liElementsSelector = "li.product";
-            var stickerSelector = "div.sticker";
-            var liElements = driver.FindElements(By.CssSelector(liElementsSelector));
+            driver.Url = "http://localhost:8080/litecart/admin/?app=countries&doc=countries";
+            var trElementsSelector = "tr.row";
+            var trElements = driver.FindElements(By.CssSelector(trElementsSelector));
 
-            for (var i = 0; i < liElements.Count; i++)
-            {
-                var stickers = liElements[i].FindElements(By.CssSelector(stickerSelector));
-                Assert.AreEqual(stickers.Count, 1);
-            }
+            int i = 5;
+            i++;
+            //for (var i = 0; i < liElements.Count; i++)
+            //{
+             //   var stickers = liElements[i].FindElements(By.CssSelector(stickerSelector));
+               // Assert.AreEqual(stickers.Count, 1);
+            //}
         }
 
         [TearDown]

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Threading;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -26,6 +27,18 @@ namespace csharttest
         {
             LoginInternal();
 
+        }
+
+        private void LoginInternal()
+        {
+            driver.Url = "http://localhost:8080/litecart/admin/";
+            IWebElement element = wait.Until(d => d.FindElement(By.Name("username")));
+            driver.FindElement(By.Name("username")).SendKeys("admin");
+            IWebElement elementpswd = wait.Until(d => d.FindElement(By.Name("password")));
+            driver.FindElement(By.Name("password")).SendKeys("admin");
+            driver.FindElement(By.Name("remember_me")).Click();
+            driver.FindElement(By.Name("login")).Click();
+            wait.Until(ExpectedConditions.TitleIs("My Store"));
         }
 
         [Test]
@@ -58,6 +71,38 @@ namespace csharttest
             }
         }
 
+
+        [Test]
+        [Obsolete]
+        public void Task9_CheckSorting()
+        {
+            LoginInternal();
+            driver.Url = "http://localhost:8080/litecart/admin/?app=countries&doc=countries";
+            var trElementsSelector = "tr.row";
+            var trElements = driver.FindElements(By.CssSelector(trElementsSelector));
+
+            for (var i = 0; i < trElements.Count - 1; i++)
+            {
+                var currentCountry = GetCountryName(trElements, i);
+                var nextCountry = GetCountryName(trElements, i+1);
+                var textCompare = string.Compare(currentCountry, nextCountry);
+                Assert.AreEqual(textCompare, -1);
+            }
+        }
+
+        private string GetCountryName(ReadOnlyCollection<IWebElement> trElements, int i) 
+        { 
+            var tdElements = trElements[i].FindElements(By.CssSelector("td"));
+            var tdCountry = tdElements[4];
+            var aElement = tdCountry.FindElement(By.CssSelector("a"));
+            var aText = aElement.Text;
+            return aText;
+        }
+
+
+
+
+
         [TearDown]
         public void stop()
         {
@@ -66,17 +111,7 @@ namespace csharttest
         }
 
 
-        private void LoginInternal ()
-        {
-            driver.Url = "http://localhost:8080/litecart/admin/";
-            IWebElement element = wait.Until(d => d.FindElement(By.Name("username")));
-            driver.FindElement(By.Name("username")).SendKeys("admin");
-            IWebElement elementpswd = wait.Until(d => d.FindElement(By.Name("password")));
-            driver.FindElement(By.Name("password")).SendKeys("admin");
-            driver.FindElement(By.Name("remember_me")).Click();
-            driver.FindElement(By.Name("login")).Click();
-            wait.Until(ExpectedConditions.TitleIs("My Store"));
-        }
+   
 
     }
 }
