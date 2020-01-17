@@ -29,17 +29,6 @@ namespace csharttest
 
         }
 
-        private void LoginInternal()
-        {
-            driver.Url = "http://localhost:8080/litecart/admin/";
-            IWebElement element = wait.Until(d => d.FindElement(By.Name("username")));
-            driver.FindElement(By.Name("username")).SendKeys("admin");
-            IWebElement elementpswd = wait.Until(d => d.FindElement(By.Name("password")));
-            driver.FindElement(By.Name("password")).SendKeys("admin");
-            driver.FindElement(By.Name("remember_me")).Click();
-            driver.FindElement(By.Name("login")).Click();
-            wait.Until(ExpectedConditions.TitleIs("My Store"));
-        }
 
         [Test]
         [Obsolete]
@@ -74,7 +63,7 @@ namespace csharttest
 
         [Test]
         [Obsolete]
-        public void Task9_CheckSorting()
+        public void Task9_CheckCountriesSorting()
         {
             LoginInternal();
             driver.Url = "http://localhost:8080/litecart/admin/?app=countries&doc=countries";
@@ -84,22 +73,58 @@ namespace csharttest
             for (var i = 0; i < trElements.Count - 1; i++)
             {
                 var currentCountry = GetCountryName(trElements, i);
-                var nextCountry = GetCountryName(trElements, i+1);
+                var nextCountry = GetCountryName(trElements, i + 1);
                 var textCompare = string.Compare(currentCountry, nextCountry);
                 Assert.AreEqual(textCompare, -1);
             }
         }
 
-        private string GetCountryName(ReadOnlyCollection<IWebElement> trElements, int i) 
-        { 
-            var tdElements = trElements[i].FindElements(By.CssSelector("td"));
-            var tdCountry = tdElements[4];
-            var aElement = tdCountry.FindElement(By.CssSelector("a"));
-            var aText = aElement.Text;
-            return aText;
+        [Test]
+        [Obsolete]
+        public void Task9_CheckGeoZones()
+        {
+            LoginInternal();
+            driver.Url = "http://localhost:8080/litecart/admin/?app=geo_zones&doc=geo_zones";
+            var trElementsSelector = "tr.row";
+            var trElements = driver.FindElements(By.CssSelector(trElementsSelector));
+            for (var i = 0; i < trElements.Count; i++)
+            {
+                var tdElements = trElements[i].FindElements(By.CssSelector("td"));
+                var tdCountry = tdElements[2];
+                var aElement = tdCountry.FindElement(By.CssSelector("a"));
+                aElement.Click();
+                wait.Until(ExpectedConditions.TitleIs("Edit Geo Zone | My Store"));
+                var tableElementsSelector = "table#table-zones tr:not(.header)";
+                var trZoneElements = driver.FindElements(By.CssSelector(tableElementsSelector));
+                for (var j = 0; j < trZoneElements.Count - 2; j++)
+                {
+                    var zone = GetZoneName(trZoneElements, j);
+                    var nextZone = GetZoneName(trZoneElements, j + 1);
+                    var textCompare = string.Compare(zone, nextZone);
+                    Assert.AreEqual(textCompare, -1);
+                }
+                driver.Navigate().Back();
+                trElements = driver.FindElements(By.CssSelector(trElementsSelector));
+
+            }
         }
 
-
+        private string GetZoneName(ReadOnlyCollection<IWebElement> trZoneElements, int j)
+        {
+            var tdZoneElements = trZoneElements[j].FindElements(By.CssSelector("td"));
+            var tdCountryZone = tdZoneElements[2];
+            var selectNameZones = tdCountryZone.FindElements(By.CssSelector("select option"));
+            for (var i = 0; i < selectNameZones.Count; i++)
+            {
+                var zoneSelect = selectNameZones[i].GetAttribute("selected");
+                if(zoneSelect == "true")
+                {
+                    return selectNameZones[i].Text;
+                }
+            }
+            Assert.Fail("Country Zone is not selected");
+            return null;
+        }
 
 
 
@@ -110,8 +135,25 @@ namespace csharttest
             driver = null;
         }
 
+        private string GetCountryName(ReadOnlyCollection<IWebElement> trElements, int i)
+        {
+            var tdElements = trElements[i].FindElements(By.CssSelector("td"));
+            var tdCountry = tdElements[4];
+            var aElement = tdCountry.FindElement(By.CssSelector("a"));
+            var aText = aElement.Text;
+            return aText;
+        }
 
-   
-
+        private void LoginInternal()
+        {
+            driver.Url = "http://localhost:8080/litecart/admin/";
+            IWebElement element = wait.Until(d => d.FindElement(By.Name("username")));
+            driver.FindElement(By.Name("username")).SendKeys("admin");
+            IWebElement elementpswd = wait.Until(d => d.FindElement(By.Name("password")));
+            driver.FindElement(By.Name("password")).SendKeys("admin");
+            driver.FindElement(By.Name("remember_me")).Click();
+            driver.FindElement(By.Name("login")).Click();
+            wait.Until(ExpectedConditions.TitleIs("My Store"));
+        }
     }
 }
