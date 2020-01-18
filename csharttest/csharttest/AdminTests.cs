@@ -105,10 +105,9 @@ namespace csharttest
                 }
                 driver.Navigate().Back();
                 trElements = driver.FindElements(By.CssSelector(trElementsSelector));
-
             }
         }
-
+        
         private string GetZoneName(ReadOnlyCollection<IWebElement> trZoneElements, int j)
         {
             var tdZoneElements = trZoneElements[j].FindElements(By.CssSelector("td"));

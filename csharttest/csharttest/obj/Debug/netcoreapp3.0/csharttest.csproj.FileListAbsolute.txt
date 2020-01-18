@@ -94,4 +94,3 @@
 /Users/nila/Work/Selenium_course/Selenium_course/Selenium_course/csharttest/csharttest/obj/Debug/netcoreapp3.0/csharttest.csproj.CopyComplete
 /Users/nila/Work/Selenium_course/Selenium_course/Selenium_course/csharttest/csharttest/obj/Debug/netcoreapp3.0/csharttest.dll
 /Users/nila/Work/Selenium_course/Selenium_course/Selenium_course/csharttest/csharttest/obj/Debug/netcoreapp3.0/csharttest.pdb
-/Users/nila/Work/Selenium_course/Selenium_course/Selenium_course/csharttest/csharttest/obj/Debug/netcoreapp3.0/csharttest.csprojAssemblyReference.cache
