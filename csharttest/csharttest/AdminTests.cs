@@ -58,7 +58,7 @@ namespace csharttest
 
                 Thread.Sleep(250);
             }
-        }
+        }   
 
 
         [Test]
@@ -69,11 +69,20 @@ namespace csharttest
             driver.Url = "http://localhost:8080/litecart/admin/?app=countries&doc=countries";
             var trElementsSelector = "tr.row";
             var trElements = driver.FindElements(By.CssSelector(trElementsSelector));
-
+            string cache = null; 
             for (var i = 0; i < trElements.Count - 1; i++)
             {
-                var currentCountry = GetCountryName(trElements, i);
-                var nextCountry = GetCountryName(trElements, i + 1);
+                string currentCountry;
+                if (cache == null)
+                {
+                    currentCountry = GetCountryName(trElements, i);
+                }
+                else
+                {
+                    currentCountry = cache;
+                }
+                string nextCountry = GetCountryName(trElements, i + 1);
+                cache = nextCountry;
                 var textCompare = string.Compare(currentCountry, nextCountry);
                 Assert.AreEqual(textCompare, -1);
             }
@@ -96,11 +105,21 @@ namespace csharttest
                 wait.Until(ExpectedConditions.TitleIs("Edit Geo Zone | My Store"));
                 var tableElementsSelector = "table#table-zones tr:not(.header)";
                 var trZoneElements = driver.FindElements(By.CssSelector(tableElementsSelector));
+                string cache = null;
                 for (var j = 0; j < trZoneElements.Count - 2; j++)
                 {
-                    var zone = GetZoneName(trZoneElements, j);
+                    string currentZone;
+                    if (cache == null)
+                    {
+                        currentZone = GetZoneName(trZoneElements, j);
+                    }
+                    else
+                    {
+                        currentZone = cache;
+                    }
                     var nextZone = GetZoneName(trZoneElements, j + 1);
-                    var textCompare = string.Compare(zone, nextZone);
+                    cache = nextZone;
+                    var textCompare = string.Compare(currentZone, nextZone);
                     Assert.AreEqual(textCompare, -1);
                 }
                 driver.Navigate().Back();

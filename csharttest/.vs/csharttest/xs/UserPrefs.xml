@@ -7,7 +7,7 @@
       <File FileName="csharttest/SecondTest.cs" />
       <File FileName="csharttest/Thirdtest.cs" />
       <File FileName="csharttest/BaseTest.cs" />
-      <File FileName="csharttest/AdminTests.cs" Line="104" Column="36" />
+      <File FileName="csharttest/AdminTests.cs" Line="104" Column="34" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
