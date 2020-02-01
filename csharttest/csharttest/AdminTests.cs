@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -110,7 +112,112 @@ namespace csharttest
                 trElements = driver.FindElements(By.CssSelector(trElementsSelector));
             }
         }
-        
+
+        [Test]
+        [Obsolete]
+        public void Test12()
+        {
+            LoginInternal();
+            driver.Url = "http://localhost:8080/litecart/admin/?app=catalog&doc=catalog";
+
+            driver.FindElement(By.CssSelector("td#content div :nth-child(2)")).Click();
+            var name = Guid.NewGuid().ToString();
+            GeneralInfo(name);
+            driver.FindElement(By.CssSelector("div.tabs ul :nth-child(2)")).Click();
+            InformationInfo();
+
+            driver.FindElement(By.CssSelector("div.tabs ul :nth-child(4)")).Click();
+            PricesInfo();
+
+            driver.FindElement(By.CssSelector("span.button-set button[name='save']")).Click();
+
+            Thread.Sleep(1000);
+
+            var trRow = driver.FindElements(By.CssSelector("tr.row"));
+            var productsCount = trRow.Count(tr =>
+            {
+                var tdName = tr.FindElements(By.CssSelector("td"))[2];
+                var a = tdName.FindElement(By.CssSelector("a"));
+                return a.Text == name;
+            });
+
+            Assert.AreEqual(1, productsCount);
+        }
+
+        private void GeneralInfo(string name)
+        {
+            Thread.Sleep(500);
+            driver.FindElement(By.CssSelector("div#tab-general input[name='name[en]']")).SendKeys(name);
+
+            Thread.Sleep(500);
+            driver.FindElement(By.CssSelector("div#tab-general input[name='code']")).SendKeys("12345");
+
+            Thread.Sleep(500);
+            driver.FindElements(By.CssSelector("div#tab-general input[name='categories[]']"))[1].Click();
+
+            Thread.Sleep(500);
+            var category = driver.FindElement(By.Name("default_category_id"));
+            var selectElement = new SelectElement(category);
+            selectElement.SelectByValue("1");
+
+            Thread.Sleep(500);
+            driver.FindElements(By.CssSelector("div#tab-general input[name='product_groups[]']"))[1].Click();
+
+            Thread.Sleep(500);
+            driver.FindElement(By.CssSelector("div#tab-general input[name='quantity']")).SendKeys("5");
+
+            Thread.Sleep(500);
+            var upload = driver.FindElement(By.CssSelector("div#tab-general input[name='new_images[]"));
+            upload.SendKeys(Path.GetFullPath("2020-02-01 20.07.42.jpg"));
+
+            Thread.Sleep(500);
+            driver.FindElement(By.CssSelector("div#tab-general input[name='date_valid_from']")).SendKeys("01012020");
+
+            Thread.Sleep(500);
+            driver.FindElement(By.CssSelector("div#tab-general input[name='date_valid_to']")).SendKeys("01012021");
+        }
+
+        private void InformationInfo()
+        {
+
+            Thread.Sleep(500);
+            var manufacturer = driver.FindElement(By.Name("manufacturer_id"));
+            var selectElement = new SelectElement(manufacturer);
+            selectElement.SelectByValue("1");
+
+            Thread.Sleep(500);
+            driver.FindElement(By.CssSelector("div#tab-information input[name='keywords']")).SendKeys("keywords");
+
+            Thread.Sleep(500);
+            driver.FindElement(By.CssSelector("div#tab-information input[name='short_description[en]']")).SendKeys("short_description");
+
+            Thread.Sleep(500);
+            driver.FindElement(By.CssSelector("div.trumbowyg-editor")).SendKeys("editor");
+
+            Thread.Sleep(500);
+            driver.FindElement(By.CssSelector("div#tab-information input[name='head_title[en]']")).SendKeys("head_title");
+
+            Thread.Sleep(500);
+            driver.FindElement(By.CssSelector("div#tab-information input[name='meta_description[en]']")).SendKeys("meta_description");
+        }
+
+        private void PricesInfo()
+        {
+            Thread.Sleep(500);
+            driver.FindElement(By.CssSelector("div#tab-prices input[name='purchase_price']")).SendKeys("1000");
+
+            Thread.Sleep(500);
+            var purchasePrice = driver.FindElement(By.Name("purchase_price_currency_code"));
+            var selectElement = new SelectElement(purchasePrice);
+            selectElement.SelectByValue("EUR");
+
+            Thread.Sleep(500);
+            driver.FindElement(By.CssSelector("div#tab-prices input[name='prices[USD]']")).SendKeys("1000");
+
+            Thread.Sleep(500);
+            driver.FindElement(By.CssSelector("div#tab-prices input[name='prices[EUR]']")).SendKeys("1000");
+        }
+
         private string GetZoneName(ReadOnlyCollection<IWebElement> trZoneElements, int j)
         {
             var tdZoneElements = trZoneElements[j].FindElements(By.CssSelector("td"));

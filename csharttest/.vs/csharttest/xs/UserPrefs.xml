@@ -1,31 +1,29 @@
 ﻿<Properties StartupConfiguration="{381AF264-DD5C-4B69-9ABA-F8FDE4F9C045}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="csharttest/ProductTests.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="csharttest/AdminTests.cs">
     <Files>
-      <File FileName="csharttest/ProductTests.cs" Line="166" Column="13" />
+      <File FileName="csharttest/ProductTests.cs" Line="143" Column="47" />
       <File FileName="csharttest/SortingTest.cs" />
       <File FileName="csharttest/MyFirstTest.cs" />
       <File FileName="csharttest/SecondTest.cs" />
       <File FileName="csharttest/Thirdtest.cs" />
       <File FileName="csharttest/BaseTest.cs" />
-      <File FileName="csharttest/AdminTests.cs" />
+      <File FileName="csharttest/AdminTests.cs" Line="133" Column="30" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="csharttest" expanded="True">
             <Node name="csharttest" expanded="True">
-              <Node name="ProductTests.cs" selected="True" />
+              <Node name="AdminTests.cs" selected="True" />
             </Node>
           </Node>
         </State>
       </Pad>
       <Pad Id="MonoDevelop.UnitTesting.TestPad">
         <State name="__root__">
-          <Node name="csharttest" expanded="True" selected="True">
-            <Node name="csharttest" expanded="True">
-              <Node name="csharttest" expanded="True">
-                <Node name="ProductTests" expanded="True" />
-              </Node>
+          <Node name="csharttest" expanded="True">
+            <Node name="csharttest" expanded="True" selected="True">
+              <Node name="csharttest" expanded="True" />
             </Node>
           </Node>
         </State>
@@ -40,8 +38,6 @@
       <Breakpoint file="/Users/nila/Work/Selenium_course/Selenium_course/Selenium_course/csharttest/csharttest/MyFirstTest.cs" relfile="csharttest/MyFirstTest.cs" line="26" column="1" />
       <Breakpoint file="/Users/nila/Work/Selenium_course/Selenium_course/Selenium_course/csharttest/csharttest/SortingTest.cs" relfile="csharttest/SortingTest.cs" line="32" column="1" />
       <Breakpoint file="/Users/nila/Work/Selenium_course/Selenium_course/Selenium_course/csharttest/csharttest/SortingTest.cs" relfile="csharttest/SortingTest.cs" line="27" column="1" />
-      <Breakpoint file="/Users/nila/Work/Selenium_course/Selenium_course/Selenium_course/csharttest/csharttest/ProductTests.cs" relfile="csharttest/ProductTests.cs" line="157" column="1" />
-      <Breakpoint file="/Users/nila/Work/Selenium_course/Selenium_course/Selenium_course/csharttest/csharttest/ProductTests.cs" relfile="csharttest/ProductTests.cs" line="155" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

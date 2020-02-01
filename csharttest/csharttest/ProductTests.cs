@@ -125,13 +125,13 @@ namespace csharttest
             driverChrome = new ChromeDriver();
             driverChrome.Url = "http://litecart.stqa.ru/en/";
             waitChrome = new WebDriverWait(driverChrome, TimeSpan.FromSeconds(2));
+            var email = GenerateEmail();
+            var password = "password_test_111";
             var trElements = driverChrome.FindElements(By.CssSelector("div.content form table tr"));
             var tdElements = trElements[4];
             var newCustButton = tdElements.FindElement(By.CssSelector("a"));
             newCustButton.Click();
-            var email = GenerateEmail();
-            var password = "password_test_111";
-
+            
             EnterTextToInput(driverChrome, "firstname", "Nila");
             EnterTextToInput(driverChrome, "lastname", "Tikhonova");
             EnterTextToInput(driverChrome, "address1", "ulitsa");
@@ -162,8 +162,6 @@ namespace csharttest
             loginButton.Click();
 
             LogOut(driverChrome);
-
-
         }
 
         private void LogOut(IWebDriver driver)

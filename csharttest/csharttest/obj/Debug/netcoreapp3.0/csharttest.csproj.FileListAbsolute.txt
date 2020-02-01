@@ -95,3 +95,4 @@
 /Users/nila/Work/Selenium_course/Selenium_course/Selenium_course/csharttest/csharttest/obj/Debug/netcoreapp3.0/csharttest.dll
 /Users/nila/Work/Selenium_course/Selenium_course/Selenium_course/csharttest/csharttest/obj/Debug/netcoreapp3.0/csharttest.pdb
 /Users/nila/Work/Selenium_course/Selenium_course/Selenium_course/csharttest/csharttest/obj/Debug/netcoreapp3.0/csharttest.csprojAssemblyReference.cache
+/Users/nila/Work/Selenium_course/Selenium_course/Selenium_course/csharttest/csharttest/bin/Debug/netcoreapp3.0/2020-02-01 20.07.42.jpg

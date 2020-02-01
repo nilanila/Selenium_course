@@ -21,6 +21,9 @@
     <None Update="geckodriver">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="2020-02-01 20.07.42.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="FirefoxStart.cs" />
