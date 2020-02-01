@@ -4,6 +4,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Firefox;
+using System.Threading;
 
 namespace csharttest
 {
@@ -115,5 +116,76 @@ namespace csharttest
             Assert.Greater(CampaignPriceFontSize, RegularPriceFontSize);
             Assert.Greater(CampaignPriceFontSizeUpd, RegularPriceFontSizeUpd);
         }
+
+
+        [Test]
+        [Obsolete]
+        public void Test11()
+        {
+            driverChrome = new ChromeDriver();
+            driverChrome.Url = "http://litecart.stqa.ru/en/";
+            waitChrome = new WebDriverWait(driverChrome, TimeSpan.FromSeconds(2));
+            var trElements = driverChrome.FindElements(By.CssSelector("div.content form table tr"));
+            var tdElements = trElements[4];
+            var newCustButton = tdElements.FindElement(By.CssSelector("a"));
+            newCustButton.Click();
+            var email = GenerateEmail();
+            var password = "password_test_111";
+
+            EnterTextToInput(driverChrome, "firstname", "Nila");
+            EnterTextToInput(driverChrome, "lastname", "Tikhonova");
+            EnterTextToInput(driverChrome, "address1", "ulitsa");
+            EnterTextToInput(driverChrome, "postcode", "10010");
+            EnterTextToInput(driverChrome, "city", "Voronezh");
+
+            var country = driverChrome.FindElement(By.Name("country_code"));
+            var selectElement = new SelectElement(country);
+            selectElement.SelectByValue("US");
+
+            EnterTextToInput(driverChrome, "email", email);
+
+            EnterTextToInput(driverChrome, "phone", "+7123123123");
+            EnterTextToInput(driverChrome, "password", password);
+            EnterTextToInput(driverChrome, "confirmed_password", password);
+
+            driverChrome.FindElement(By.CssSelector("button[name='create_account']")).Click();
+
+            waitChrome.Until(ExpectedConditions.TitleIs("Online Store | My store"));
+            Thread.Sleep(1000);
+
+            LogOut(driverChrome);
+
+            EnterTextToInput(driverChrome, "email", email);
+            EnterTextToInput(driverChrome, "password", password);
+
+            var loginButton = driverChrome.FindElement(By.CssSelector("button[name='login']"));
+            loginButton.Click();
+
+            LogOut(driverChrome);
+
+
+        }
+
+        private void LogOut(IWebDriver driver)
+        {
+            var trElementsLogout = driver.FindElements(By.CssSelector("div#box-account div.content ul.list-vertical li"));
+            var aLogout = trElementsLogout[3].FindElement(By.CssSelector("a"));
+            aLogout.Click();
+        }
+
+
+        private static string GenerateEmail()
+        {
+            var guid = Guid.NewGuid();
+            return $"{guid}@nila.com";
+        }
+
+        private static void EnterTextToInput(IWebDriver driver, string inputName, string text)
+        {
+            Thread.Sleep(500);
+            driver.FindElement(By.CssSelector($"div.content form table tbody input[name='{inputName}']"))
+                .SendKeys(text);
+        }
     }
+
 }

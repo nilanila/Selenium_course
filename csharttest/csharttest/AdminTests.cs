@@ -72,15 +72,7 @@ namespace csharttest
             string cache = null; 
             for (var i = 0; i < trElements.Count - 1; i++)
             {
-                string currentCountry;
-                if (cache == null)
-                {
-                    currentCountry = GetCountryName(trElements, i);
-                }
-                else
-                {
-                    currentCountry = cache;
-                }
+                string currentCountry = cache == null ? GetCountryName(trElements, i) : cache;
                 string nextCountry = GetCountryName(trElements, i + 1);
                 cache = nextCountry;
                 var textCompare = string.Compare(currentCountry, nextCountry);
@@ -108,16 +100,8 @@ namespace csharttest
                 string cache = null;
                 for (var j = 0; j < trZoneElements.Count - 2; j++)
                 {
-                    string currentZone;
-                    if (cache == null)
-                    {
-                        currentZone = GetZoneName(trZoneElements, j);
-                    }
-                    else
-                    {
-                        currentZone = cache;
-                    }
-                    var nextZone = GetZoneName(trZoneElements, j + 1);
+                    string currentZone = cache == null ? GetZoneName(trZoneElements, j) : cache;
+                    string nextZone = GetZoneName(trZoneElements, j + 1);
                     cache = nextZone;
                     var textCompare = string.Compare(currentZone, nextZone);
                     Assert.AreEqual(textCompare, -1);
