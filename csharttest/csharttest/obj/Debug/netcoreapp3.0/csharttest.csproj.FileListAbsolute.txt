@@ -2,6 +2,7 @@
 /Users/nila/Work/Selenium_course/Selenium_course/Selenium_course/csharttest/csharttest/bin/Debug/netcoreapp3.0/NUnit3.TestAdapter.pdb
 /Users/nila/Work/Selenium_course/Selenium_course/Selenium_course/csharttest/csharttest/bin/Debug/netcoreapp3.0/nunit.engine.dll
 /Users/nila/Work/Selenium_course/Selenium_course/Selenium_course/csharttest/csharttest/bin/Debug/netcoreapp3.0/nunit.engine.api.dll
+/Users/nila/Work/Selenium_course/Selenium_course/Selenium_course/csharttest/csharttest/bin/Debug/netcoreapp3.0/2020-02-01 20.07.42.jpg
 /Users/nila/Work/Selenium_course/Selenium_course/Selenium_course/csharttest/csharttest/bin/Debug/netcoreapp3.0/chromedriver
 /Users/nila/Work/Selenium_course/Selenium_course/Selenium_course/csharttest/csharttest/bin/Debug/netcoreapp3.0/geckodriver
 /Users/nila/Work/Selenium_course/Selenium_course/Selenium_course/csharttest/csharttest/bin/Debug/netcoreapp3.0/csharttest.deps.json
@@ -94,5 +95,3 @@
 /Users/nila/Work/Selenium_course/Selenium_course/Selenium_course/csharttest/csharttest/obj/Debug/netcoreapp3.0/csharttest.csproj.CopyComplete
 /Users/nila/Work/Selenium_course/Selenium_course/Selenium_course/csharttest/csharttest/obj/Debug/netcoreapp3.0/csharttest.dll
 /Users/nila/Work/Selenium_course/Selenium_course/Selenium_course/csharttest/csharttest/obj/Debug/netcoreapp3.0/csharttest.pdb
-/Users/nila/Work/Selenium_course/Selenium_course/Selenium_course/csharttest/csharttest/obj/Debug/netcoreapp3.0/csharttest.csprojAssemblyReference.cache
-/Users/nila/Work/Selenium_course/Selenium_course/Selenium_course/csharttest/csharttest/bin/Debug/netcoreapp3.0/2020-02-01 20.07.42.jpg

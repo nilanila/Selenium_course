@@ -164,7 +164,66 @@ namespace csharttest
             LogOut(driverChrome);
         }
 
-        private void LogOut(IWebDriver driver)
+        [Test]
+        [Obsolete]
+        public void Test13()
+        {
+            driverChrome = new ChromeDriver();
+            driverChrome.Url = "http://litecart.stqa.ru/en/";
+            waitChrome = new WebDriverWait(driverChrome, TimeSpan.FromSeconds(10));
+
+            WaitForLoad(driverChrome, waitChrome);
+
+            AddMostPopularToBasket(driverChrome, waitChrome, 0);
+            AddMostPopularToBasket(driverChrome, waitChrome, 1);
+            AddMostPopularToBasket(driverChrome, waitChrome, 2);
+
+            driverChrome.FindElement(By.CssSelector("div#cart a.link")).Click();
+
+            WaitForLoad(driverChrome, waitChrome);
+
+            Thread.Sleep(1000);
+
+            var removedElement = waitChrome.Until(ExpectedConditions.ElementExists(By.Name("remove_cart_item")));
+            removedElement.Click();
+            waitChrome.Until(ExpectedConditions.StalenessOf(removedElement));
+            removedElement = waitChrome.Until(ExpectedConditions.ElementExists(By.Name("remove_cart_item")));
+            removedElement.Click();
+            waitChrome.Until(ExpectedConditions.StalenessOf(removedElement));
+            removedElement = waitChrome.Until(ExpectedConditions.ElementExists(By.Name("remove_cart_item")));
+            removedElement.Click();
+
+            driverChrome.Navigate().Back();
+        }
+
+        [Obsolete]
+        private static void AddMostPopularToBasket(IWebDriver driver, WebDriverWait wait, int index)
+        {
+            driver.FindElements(By.CssSelector("div#box-most-popular div.content ul li"))[index].FindElement(By.CssSelector("a.link")).Click();
+            WaitForLoad(driver, wait);
+            Thread.Sleep(1000);
+
+            var size = driver.FindElements(By.Name("options[Size]"));
+            if (size.Count > 0)
+            {
+                var selectElement = new SelectElement(size[0]);
+                selectElement.SelectByValue("Large");
+            }
+
+            wait.Until(ExpectedConditions.ElementExists(By.Name("add_cart_product"))).Click();
+            //driver.FindElement(By.Name("add_cart_product")).Click();
+            var quantityElement = driver.FindElement(By.CssSelector("div#cart a.content span.quantity"));
+            wait.Until(ExpectedConditions.TextToBePresentInElement(quantityElement, (index + 1).ToString()));
+            driver.Navigate().Back();
+            WaitForLoad(driver, wait);
+        }
+
+        private static void WaitForLoad(IWebDriver driver, WebDriverWait wait)
+        {
+            wait.Until(wd => ((IJavaScriptExecutor)driver).ExecuteScript("return document.readyState").ToString() == "complete");
+        }
+
+        private static void LogOut(IWebDriver driver)
         {
             var trElementsLogout = driver.FindElements(By.CssSelector("div#box-account div.content ul.list-vertical li"));
             var aLogout = trElementsLogout[3].FindElement(By.CssSelector("a"));
