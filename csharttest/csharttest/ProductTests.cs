@@ -192,8 +192,6 @@ namespace csharttest
             waitChrome.Until(ExpectedConditions.StalenessOf(removedElement));
             removedElement = waitChrome.Until(ExpectedConditions.ElementExists(By.Name("remove_cart_item")));
             removedElement.Click();
-
-            driverChrome.Navigate().Back();
         }
 
         [Obsolete]

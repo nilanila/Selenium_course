@@ -20,7 +20,7 @@ namespace csharttest
         public void start()
         {
             driver = new ChromeDriver();
-            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         }
 
         [Test]
@@ -150,25 +150,25 @@ namespace csharttest
         {
             LoginInternal();
             driver.Url = "http://localhost:8080/litecart/admin/?app=countries&doc=countries";
-
-            Thread.Sleep(1000);
-
+            WaitForLoad(driver, wait);
             driver.FindElement(By.CssSelector("form[name='countries_form'] table.dataTable tr.row"))
                 .FindElements(By.CssSelector("td"))[4].FindElement(By.CssSelector("a")).Click();
-
-            Thread.Sleep(1000);
-
+            WaitForLoad(driver, wait);
             var externalLinks = driver.FindElements(By.CssSelector("form table a[target='_blank']"));
-
             foreach(var externalLink in externalLinks)
             {
                 externalLink.Click();
-                // Не забудьте, что новое окно открывается не мгновенно, поэтому требуется ожидание открытия окна.
-                Thread.Sleep(1000);
+                driver.SwitchTo().Window(driver.WindowHandles[1]);
+                WaitForLoad(driver, wait);
                 driver.SwitchTo().Window(driver.WindowHandles[1]).Close();
-                Thread.Sleep(1000);
                 driver.SwitchTo().Window(driver.WindowHandles[0]);
+                //WaitForLoad(driver, wait);
             }
+        }
+
+        private static void WaitForLoad(IWebDriver driver, WebDriverWait wait)
+        {
+            wait.Until(wd => ((IJavaScriptExecutor)driver).ExecuteScript("return document.readyState").ToString() == "complete");
         }
 
         private void GeneralInfo(string name)
