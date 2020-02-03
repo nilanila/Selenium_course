@@ -171,12 +171,14 @@ namespace csharttest
             driverChrome = new ChromeDriver();
             driverChrome.Url = "http://litecart.stqa.ru/en/";
             waitChrome = new WebDriverWait(driverChrome, TimeSpan.FromSeconds(10));
+            
 
             WaitForLoad(driverChrome, waitChrome);
 
-            AddMostPopularToBasket(driverChrome, waitChrome, 0);
-            AddMostPopularToBasket(driverChrome, waitChrome, 1);
-            AddMostPopularToBasket(driverChrome, waitChrome, 2);
+            for (int i = 0; i <= 2; i++)
+            {
+                AddMostPopularToBasket(driverChrome, waitChrome, i);
+            }
 
             driverChrome.FindElement(By.CssSelector("div#cart a.link")).Click();
 
@@ -184,14 +186,12 @@ namespace csharttest
 
             Thread.Sleep(1000);
 
-            var removedElement = waitChrome.Until(ExpectedConditions.ElementExists(By.Name("remove_cart_item")));
-            removedElement.Click();
-            waitChrome.Until(ExpectedConditions.StalenessOf(removedElement));
-            removedElement = waitChrome.Until(ExpectedConditions.ElementExists(By.Name("remove_cart_item")));
-            removedElement.Click();
-            waitChrome.Until(ExpectedConditions.StalenessOf(removedElement));
-            removedElement = waitChrome.Until(ExpectedConditions.ElementExists(By.Name("remove_cart_item")));
-            removedElement.Click();
+            for (int i = 0; i <= 2; i++)
+            {
+                var removedElement = waitChrome.Until(ExpectedConditions.ElementExists(By.Name("remove_cart_item")));
+                removedElement.Click();
+                waitChrome.Until(ExpectedConditions.StalenessOf(removedElement));
+            }
         }
 
         [Obsolete]

@@ -6,6 +6,7 @@ using System.Threading;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 
 namespace csharttest
@@ -19,16 +20,19 @@ namespace csharttest
         [SetUp]
         public void start()
         {
-            driver = new ChromeDriver();
+            ChromeOptions options = new ChromeOptions();
+            options.SetLoggingPreference(LogType.Browser, LogLevel.All);
+            driver = new ChromeDriver(options);
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+
+            
         }
 
         [Test]
         [Obsolete]
         public void Login()
         {
-            LoginInternal();
-
+            LoginInternal(this.driver);
         }
 
 
@@ -36,8 +40,7 @@ namespace csharttest
         [Obsolete]
         public void Task7_CheckMenu()
         {
-            LoginInternal();
-
+            LoginInternal(this.driver);
             var selector = "div#body table td#sidebar div#box-apps-menu-wrapper ul#box-apps-menu li#app-";
             var headerSelector = "div#body table td#content h1";
             var liElements = driver.FindElements(By.CssSelector(selector));
@@ -67,7 +70,7 @@ namespace csharttest
         [Obsolete]
         public void Task9_CheckCountriesSorting()
         {
-            LoginInternal();
+            LoginInternal(this.driver);
             driver.Url = "http://localhost:8080/litecart/admin/?app=countries&doc=countries";
             var trElementsSelector = "tr.row";
             var trElements = driver.FindElements(By.CssSelector(trElementsSelector));
@@ -86,7 +89,7 @@ namespace csharttest
         [Obsolete]
         public void Task9_CheckGeoZones()
         {
-            LoginInternal();
+            LoginInternal(this.driver);
             driver.Url = "http://localhost:8080/litecart/admin/?app=geo_zones&doc=geo_zones";
             var trElementsSelector = "tr.row";
             var trElements = driver.FindElements(By.CssSelector(trElementsSelector));
@@ -117,7 +120,7 @@ namespace csharttest
         [Obsolete]
         public void Test12()
         {
-            LoginInternal();
+            LoginInternal(this.driver);
             driver.Url = "http://localhost:8080/litecart/admin/?app=catalog&doc=catalog";
 
             driver.FindElement(By.CssSelector("td#content div :nth-child(2)")).Click();
@@ -148,7 +151,7 @@ namespace csharttest
         [Obsolete]
         public void Test14()
         {
-            LoginInternal();
+            LoginInternal(this.driver);
             driver.Url = "http://localhost:8080/litecart/admin/?app=countries&doc=countries";
             WaitForLoad(driver, wait);
             driver.FindElement(By.CssSelector("form[name='countries_form'] table.dataTable tr.row"))
@@ -162,8 +165,43 @@ namespace csharttest
                 WaitForLoad(driver, wait);
                 driver.SwitchTo().Window(driver.WindowHandles[1]).Close();
                 driver.SwitchTo().Window(driver.WindowHandles[0]);
-                //WaitForLoad(driver, wait);
             }
+        }
+
+        [Test]
+        [Obsolete]
+        public void Test17()
+        {
+            FirefoxOptions options = new FirefoxOptions();
+            options.SetLoggingPreference(LogType.Browser, LogLevel.Warning);
+
+            driver = new FirefoxDriver(options);
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            LoginInternal(driver);
+            driver.Url = "http://localhost:8080/litecart/admin/?app=catalog&doc=catalog&category_id=1";
+            WaitForLoad(driver, wait);
+
+            var rows = driver.FindElements(By.CssSelector("form[name='catalog_form'] table.dataTable tr.row"))
+                .Where(row => !row.FindElements(By.CssSelector("i.fa-folder-open,i.fa-folder")).Any()).ToList();
+            var i = 0;
+            for(i = 0; i < rows.Count(); i++)
+            {
+                rows[i].FindElements(By.CssSelector("td"))[2].FindElement(By.CssSelector("a")).Click();
+                Thread.Sleep(400);
+
+                // fails with NullReferenceException
+                var entries = driver.Manage().Logs.GetLog(LogType.Browser);
+                Assert.IsEmpty(entries, "logs!!!");
+                
+                driver.Navigate().Back();
+                Thread.Sleep(400);
+
+                // refresh rows
+                rows = driver.FindElements(By.CssSelector("form[name='catalog_form'] table.dataTable tr.row"))
+                    .Where(row => !row.FindElements(By.CssSelector("i.fa-folder-open,i.fa-folder")).Any()).ToList();
+            }
+
+            Thread.Sleep(2000);
         }
 
         private static void WaitForLoad(IWebDriver driver, WebDriverWait wait)
@@ -280,16 +318,18 @@ namespace csharttest
             return aText;
         }
 
-        private void LoginInternal()
+        private void LoginInternal(IWebDriver driver)
         {
             driver.Url = "http://localhost:8080/litecart/admin/";
-            IWebElement element = wait.Until(d => d.FindElement(By.Name("username")));
+            Thread.Sleep(1000);
+            //IWebElement element = wait.Until(d => d.FindElement(By.Name("username")));
             driver.FindElement(By.Name("username")).SendKeys("admin");
-            IWebElement elementpswd = wait.Until(d => d.FindElement(By.Name("password")));
+            //IWebElement elementpswd = wait.Until(d => d.FindElement(By.Name("password")));
             driver.FindElement(By.Name("password")).SendKeys("admin");
             driver.FindElement(By.Name("remember_me")).Click();
             driver.FindElement(By.Name("login")).Click();
-            wait.Until(ExpectedConditions.TitleIs("My Store"));
+            Thread.Sleep(1000);
+            //wait.Until(ExpectedConditions.TitleIs("My Store"));
         }
     }
 }
