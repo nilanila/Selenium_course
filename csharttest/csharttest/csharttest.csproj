@@ -29,4 +29,7 @@
     <Compile Remove="FirefoxStart.cs" />
     <Compile Remove="SortingTest.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pages\" />
+  </ItemGroup>
 </Project>

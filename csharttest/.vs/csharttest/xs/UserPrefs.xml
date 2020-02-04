@@ -1,19 +1,19 @@
 ﻿<Properties StartupConfiguration="{381AF264-DD5C-4B69-9ABA-F8FDE4F9C045}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="csharttest/ProductTests.cs">
     <Files>
-      <File FileName="csharttest/ProductTests.cs" Line="244" Column="34" />
-      <File FileName="csharttest/SortingTest.cs" />
-      <File FileName="csharttest/MyFirstTest.cs" />
-      <File FileName="csharttest/SecondTest.cs" />
-      <File FileName="csharttest/Thirdtest.cs" />
-      <File FileName="csharttest/BaseTest.cs" />
-      <File FileName="csharttest/AdminTests.cs" />
+      <File FileName="csharttest/ProductTests.cs" Line="244" Column="10" />
+      <File FileName="csharttest/Pages/MainPage.cs" Line="17" Column="26" />
+      <File FileName="csharttest/Pages/ProductPage.cs" Line="27" Column="51" />
+      <File FileName="csharttest/Pages/CartPage.cs" Line="21" Column="17" />
+      <File FileName="csharttest/Pages/ProductBasePage.cs" Line="6" Column="27" />
+      <File FileName="csharttest/Pages/PageBase.cs" Line="81" Column="31" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="csharttest" expanded="True">
             <Node name="csharttest" expanded="True">
+              <Node name="Pages" expanded="True" />
               <Node name="ProductTests.cs" selected="True" />
             </Node>
           </Node>
@@ -25,7 +25,7 @@
             <Node name="csharttest" expanded="True">
               <Node name="csharttest" expanded="True">
                 <Node name="ProductTests" expanded="True">
-                  <Node name="TestGettingColor" selected="True" />
+                  <Node name="Test13_OOP" selected="True" />
                 </Node>
               </Node>
             </Node>

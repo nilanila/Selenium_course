@@ -7,6 +7,7 @@ using OpenQA.Selenium.Firefox;
 using System.Threading;
 using System.Drawing;
 using System.Linq;
+using csharttest.Pages;
 
 namespace csharttest
 {
@@ -179,7 +180,6 @@ namespace csharttest
             driverChrome.Url = "http://litecart.stqa.ru/en/";
             waitChrome = new WebDriverWait(driverChrome, TimeSpan.FromSeconds(10));
             
-
             WaitForLoad(driverChrome, waitChrome);
 
             for (int i = 0; i <= 2; i++)
@@ -202,6 +202,26 @@ namespace csharttest
         }
 
         [Test]
+        [Obsolete]
+        public void Test13_OOP()
+        {
+            driverChrome = new ChromeDriver();
+            driverChrome.Url = "http://litecart.stqa.ru/en/";
+            waitChrome = new WebDriverWait(driverChrome, TimeSpan.FromSeconds(5));
+
+            var mainPage = new MainPage(driverChrome, waitChrome);
+            for (var i = 0; i <= 2; i++)
+            {
+                var productPage = mainPage.GoToNthMostPopularProduct(i);
+                productPage.AddProductToCart();
+                mainPage = productPage.GoToMainPage();
+            }
+
+            var cartPage = mainPage.GoToCart();
+            cartPage.RemoveProducts();
+        }
+
+        [Test]
         public void TestGettingColor()
         {
             var color = GetColorFromStringRgb("rgb(123, 123, 123)");
@@ -214,6 +234,22 @@ namespace csharttest
             Assert.IsTrue(color2.R == 123);
             Assert.IsTrue(color2.G == 123);
             Assert.IsTrue(color2.B == 123);
+        }
+
+        [TearDown]
+        public void Stop()
+        {
+            if (driverChrome != null)
+            {
+                driverChrome.Quit();
+                driverChrome = null;
+            }
+
+            if (driverFF != null)
+            {
+                driverFF.Quit();
+                driverFF = null;
+            }
         }
 
         private static Color GetColorFromStringRgb(string rgb)
@@ -249,6 +285,14 @@ namespace csharttest
             //return nums.Count() == 3
             //    ? Color.FromArgb(nums[0], nums[1], nums[2])
             //    : Color.FromArgb(nums[3], nums[0], nums[1], nums[2]);
+        }
+
+        [Obsolete]
+        private static void AddMostPopularToBasketMultyLayer(IWebDriver driver, WebDriverWait wait, int index)
+        {
+            var mainPage = new MainPage(driver, wait);
+            var productPage = mainPage.GoToNthMostPopularProduct(index);
+            productPage.GoToMainPage();
         }
 
         [Obsolete]
