@@ -5,6 +5,8 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Firefox;
 using System.Threading;
+using System.Drawing;
+using System.Linq;
 
 namespace csharttest
 {
@@ -20,7 +22,7 @@ namespace csharttest
 
         [Test]
         [Obsolete]
-        public void Task8_CheckStickers()
+        public void Test8()
         {
             driverChrome = new ChromeDriver();
             waitChrome = new WebDriverWait(driverChrome, TimeSpan.FromSeconds(2));
@@ -42,30 +44,29 @@ namespace csharttest
 
         [Test]
         [Obsolete]
-        public void Task10_Chrome()
+        public void Test10_Chrome()
         {
             driverChrome = new ChromeDriver();
             waitChrome = new WebDriverWait(driverChrome, TimeSpan.FromSeconds(2));
-            Test10(driverChrome, waitChrome, "rgba({0}, {1}, {2}, 1)", "700");
+            Test10(driverChrome, waitChrome, "700");
             driverChrome.Quit();
             driverChrome = null;
         }
 
         [Test]
         [Obsolete]
-        public void Task10_FF()
+        public void Test10_FF()
         {
             driverFF = new FirefoxDriver();
             waitFF = new WebDriverWait(driverFF, TimeSpan.FromSeconds(2));
-            Test10(driverFF, waitFF, "rgb({0}, {1}, {2})", "900");
+            Test10(driverFF, waitFF, "900");
             driverFF.Quit();
             driverFF = null;
         }
 
 
-        [Test]
         [Obsolete]
-        private void Test10(IWebDriver driver, WebDriverWait wait, string rgbTemplate, string fontWeight)
+        private void Test10(IWebDriver driver, WebDriverWait wait, string fontWeight)
         {
             driver.Url = "http://localhost:8080/litecart/";
 
@@ -74,13 +75,15 @@ namespace csharttest
 
             var RegularPrice = driver.FindElement(By.CssSelector("div#box-campaigns div.content div.price-wrapper s.regular-price"));
             var RegularPriceText = RegularPrice.Text;
-            var RegularPriceColor = RegularPrice.GetCssValue("color");
+            var RegularPriceColorString = RegularPrice.GetCssValue("color");
+            var RegularPriceColor = GetColorFromStringRgb(RegularPriceColorString);
             var RegularPriceDecoration = RegularPrice.GetCssValue("text-decoration").Contains("line-through");
             var RegularPriceFontSize = RegularPrice.GetCssValue("font-size");
 
             var CampaignPrice = driver.FindElement(By.CssSelector("div#box-campaigns div.content div.price-wrapper strong.campaign-price"));
             var CampaignPriceText = CampaignPrice.Text;
-            var CampaignPriceColor = CampaignPrice.GetCssValue("color");
+            var CampaignPriceColorString = CampaignPrice.GetCssValue("color");
+            var CampaignPriceColor = GetColorFromStringRgb(CampaignPriceColorString);
             var CampaignPriceDecoration = CampaignPrice.GetCssValue("font-weight").Contains(fontWeight);
             var CampaignPriceFontSize = CampaignPrice.GetCssValue("font-size");
 
@@ -92,23 +95,27 @@ namespace csharttest
 
             var RegularPriceUpd = driver.FindElement(By.CssSelector("div#box-product div.content div.information div.price-wrapper s.regular-price"));
             var RegularPriceUpdText = RegularPriceUpd.Text;
-            var RegularPriceUpdColor = RegularPriceUpd.GetCssValue("color");
+            var RegularPriceUpdColorString = RegularPriceUpd.GetCssValue("color");
+            var RegularPriceUpdColor = GetColorFromStringRgb(RegularPriceUpdColorString);
             var RegularPriceUpdDecoration = RegularPriceUpd.GetCssValue("text-decoration").Contains("line-through");
             var RegularPriceFontSizeUpd = RegularPriceUpd.GetCssValue("font-size");
 
             var CampaignPriceUpd = driver.FindElement(By.CssSelector("div#box-product div.content div.information div.price-wrapper strong.campaign-price"));
             var CampaignPriceUpdText = CampaignPriceUpd.Text;
-            var CampaignPriceUpdColor = CampaignPriceUpd.GetCssValue("color");
+            var CampaignPriceUpdColorString = CampaignPriceUpd.GetCssValue("color");
+            var CampaignPriceUpdColor = GetColorFromStringRgb(CampaignPriceUpdColorString);
             var CampaignPriceUpdDecoration = CampaignPriceUpd.GetCssValue("font-weight").Contains("700");
             var CampaignPriceFontSizeUpd = CampaignPriceUpd.GetCssValue("font-size");
 
             Assert.AreEqual(productNameText, productNameUpdText);
             Assert.AreEqual(RegularPriceText, RegularPriceUpdText);
             Assert.AreEqual(CampaignPriceText, CampaignPriceUpdText);
-            Assert.AreEqual(string.Format(rgbTemplate, 119, 119, 119), RegularPriceColor);
-            Assert.AreEqual(string.Format(rgbTemplate, 102, 102, 102), RegularPriceUpdColor);
-            Assert.AreEqual(string.Format(rgbTemplate, 204, 0, 0), CampaignPriceColor);
-            Assert.AreEqual(string.Format(rgbTemplate, 204, 0, 0), CampaignPriceUpdColor);
+            Assert.IsTrue(RegularPriceColor.R == RegularPriceColor.G &&
+                          RegularPriceColor.R == RegularPriceColor.B);
+            Assert.IsTrue(RegularPriceUpdColor.R == RegularPriceUpdColor.G &&
+                          RegularPriceUpdColor.R == RegularPriceUpdColor.B);
+            Assert.IsTrue(CampaignPriceColor.G == CampaignPriceColor.B);
+            Assert.IsTrue(CampaignPriceUpdColor.G == CampaignPriceUpdColor.B);
             Assert.IsTrue(RegularPriceDecoration);
             Assert.IsTrue(RegularPriceUpdDecoration);
             Assert.IsTrue(CampaignPriceDecoration);
@@ -192,6 +199,56 @@ namespace csharttest
                 removedElement.Click();
                 waitChrome.Until(ExpectedConditions.StalenessOf(removedElement));
             }
+        }
+
+        [Test]
+        public void TestGettingColor()
+        {
+            var color = GetColorFromStringRgb("rgb(123, 123, 123)");
+            Assert.IsTrue(color.R == 123);
+            Assert.IsTrue(color.G == 123);
+            Assert.IsTrue(color.B == 123);
+
+            var color2 = GetColorFromStringRgb("rgba(123, 123, 123, 123)");
+            Assert.IsTrue(color2.A == 123);
+            Assert.IsTrue(color2.R == 123);
+            Assert.IsTrue(color2.G == 123);
+            Assert.IsTrue(color2.B == 123);
+        }
+
+        private static Color GetColorFromStringRgb(string rgb)
+        {
+            var openIndex = rgb.IndexOf('(');
+            var closeIndex = rgb.IndexOf(')');
+            var colorsString = rgb.Substring(openIndex + 1, closeIndex - openIndex - 1); // "123, 123, 123"
+            string[] colorNums = colorsString.Split(','); // ["123"," 123"," 123"]
+
+            for(var i = 0; i < colorNums.Length; i++) // ["123","123","123"]
+            {
+                colorNums[i] = colorNums[i].Trim();
+            }
+
+            int[] nums = new int[colorNums.Length]; // [,,]
+            for(var i = 0; i < colorNums.Length; i++) // [123,123,123]
+            {
+                int num = int.Parse(colorNums[i]);
+                nums[i] = num;
+            }
+
+            //var nums = colorsString.Split(',').Select(s => int.Parse(s.Trim())).ToList();
+
+            if(nums.Count() == 3)
+            {
+                return Color.FromArgb(nums[0], nums[1], nums[2]);
+            }
+            else
+            {
+                return Color.FromArgb(nums[3], nums[0], nums[1], nums[2]);
+            }
+
+            //return nums.Count() == 3
+            //    ? Color.FromArgb(nums[0], nums[1], nums[2])
+            //    : Color.FromArgb(nums[3], nums[0], nums[1], nums[2]);
         }
 
         [Obsolete]
