@@ -203,7 +203,7 @@ namespace csharttest
 
         [Test]
         [Obsolete]
-        public void Test13_OOP()
+        public void Test19()
         {
             driverChrome = new ChromeDriver();
             driverChrome.Url = "http://litecart.stqa.ru/en/";
