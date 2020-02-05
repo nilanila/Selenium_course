@@ -115,8 +115,8 @@ namespace csharttest
                           RegularPriceColor.R == RegularPriceColor.B);
             Assert.IsTrue(RegularPriceUpdColor.R == RegularPriceUpdColor.G &&
                           RegularPriceUpdColor.R == RegularPriceUpdColor.B);
-            Assert.IsTrue(CampaignPriceColor.G == CampaignPriceColor.B);
-            Assert.IsTrue(CampaignPriceUpdColor.G == CampaignPriceUpdColor.B);
+            Assert.IsTrue(CampaignPriceColor.G == 0 && CampaignPriceColor.B == 0);
+            Assert.IsTrue(CampaignPriceUpdColor.G == 0 && CampaignPriceUpdColor.B == 0);
             Assert.IsTrue(RegularPriceDecoration);
             Assert.IsTrue(RegularPriceUpdDecoration);
             Assert.IsTrue(CampaignPriceDecoration);
